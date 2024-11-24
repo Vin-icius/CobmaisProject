@@ -1,0 +1,40 @@
+-- Criação da tabela Pessoa
+CREATE TABLE Pessoa (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Nome NVARCHAR(200) NOT NULL,
+    Cpf CHAR(11) NOT NULL UNIQUE
+);
+
+-- Criação da tabela Cliente
+CREATE TABLE Cliente (
+    Id INT PRIMARY KEY FOREIGN KEY REFERENCES Pessoa(Id),
+    Contrato NVARCHAR(20) NOT NULL UNIQUE
+);
+
+-- Criação da tabela TipoContrato
+CREATE TABLE TipoContrato (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    TipoContrato NVARCHAR(50) NOT NULL
+);
+
+-- Criação da tabela Contrato
+CREATE TABLE Contrato (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ClienteId INT NOT NULL FOREIGN KEY REFERENCES Cliente(Id),
+    Vencimento DATE NOT NULL,
+    Valor DECIMAL(18,2) NOT NULL,
+    TipoContratoId INT NOT NULL FOREIGN KEY REFERENCES TipoContrato(Id)
+);
+
+-- Criação da tabela de Log
+CREATE TABLE LogAtualizacaoDivida (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ContratoId INT NOT NULL FOREIGN KEY REFERENCES Contrato(Id),
+    ValorOriginal DECIMAL(18,2) NOT NULL,
+    DiasAtraso INT NOT NULL,
+    TipoContrato NVARCHAR(50) NOT NULL,
+    ValorAtualizado DECIMAL(18,2) NOT NULL,
+    PercentualDesconto DECIMAL(5,2) NOT NULL,
+    DataAtualizacao DATETIME NOT NULL DEFAULT GETDATE()
+);
+
