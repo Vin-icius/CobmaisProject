@@ -1,0 +1,48 @@
+[
+  {
+    "ContainingType": "CobmaisProject.Presentation.Controllers.ContratoController",
+    "Method": "AtualizarDividas",
+    "RelativePath": "api/Contrato/atualizar-dividas",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CobmaisProject.Presentation.Controllers.ContratoController",
+    "Method": "ImportarContrato",
+    "RelativePath": "api/Contrato/importar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Arquivo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CobmaisProject.Presentation.Controllers.ContratoController",
+    "Method": "ImportarContratosDeDiretorio",
+    "RelativePath": "api/Contrato/importar-diretorio",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "CobmaisProject.Presentation.Controllers.ContratoController",
+    "Method": "ListarContratos",
+    "RelativePath": "api/Contrato/listar-todos-contratos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

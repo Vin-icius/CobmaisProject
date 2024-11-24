@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CobmaisProject</name>
+    </assembly>
+    <members>
+        <member name="T:CobmaisProject.Application.DTOs.ContratoCsvDto">
+            <summary>
+            Representa um contrato enviado via CSV para importação.
+            Este objeto contém as informações necessárias para registrar um contrato na aplicação.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Application.Service.ContratoService">
+            <summary>
+            Serviço responsável pela lógica de negócios relacionada a contratos, incluindo importação, atualização e exportação.
+            </summary>
+        </member>
+        <member name="M:CobmaisProject.Application.Service.ContratoService.#ctor(CobmaisProject.Domain.Interfaces.IContratoRepository,CobmaisProject.Infrastructure.ExternalServices.CobmaisApiService,CobmaisProject.Domain.Interfaces.ILogAtualizacaoDividaRepository)">
+            <summary>
+            Construtor para injeção de dependências da camada de serviço.
+            </summary>
+            <param name="contratoRepository">Repositório para operações com contratos</param>
+            <param name="cobmaisApiService">Service para interação com a API Cobmais</param>
+            <param name="logAtualizacaoDividaRepository">Repositório para registros de atualização de dívidas</param>
+        </member>
+        <member name="M:CobmaisProject.Application.Service.ContratoService.ImportarContratosAsync(System.Collections.Generic.List{CobmaisProject.Application.DTOs.ContratoCsvDto})">
+            <summary>
+            Importa contratos a partir de uma lista de objetos DTO (ContratoCsvDto).
+            O método verifica se a pessoa existe no banco, cria um cliente e tipo de contrato se necessário,
+            e em seguida persiste os dados do contrato.
+            </summary>
+            <param name="contratos">Lista de contratos a serem importados</param>
+            <returns>Uma tarefa assíncrona representando a operação de importação</returns>
+        </member>
+        <member name="M:CobmaisProject.Application.Service.ContratoService.ObterContratoPorIdAsync(System.Int32)">
+            <summary>
+            Obtém um contrato específico a partir de seu ID.
+            </summary>
+            <param name="id">ID do contrato a ser recuperado</param>
+            <returns>O contrato correspondente ao ID informado</returns>
+        </member>
+        <member name="M:CobmaisProject.Application.Service.ContratoService.ObterTodosContratosAsync">
+            <summary>
+            Obtém todos os contratos registrados no sistema.
+            </summary>
+            <returns>Uma lista de todos os contratos</returns>
+        </member>
+        <member name="M:CobmaisProject.Application.Service.ContratoService.AtualizarDividasAsync">
+            <summary>
+            Atualiza as dívidas dos contratos, obtendo informações sobre o atraso e aplicando possíveis descontos de acordo com a API Cobmais.
+            Em seguida, registra as atualizações em um log e retorna os dados das dívidas atualizadas.
+            </summary>
+            <returns>Uma tupla contendo as dívidas atualizadas e os tipos de contrato que falharam ao atualizar</returns>
+        </member>
+        <member name="M:CobmaisProject.Application.Service.ContratoService.Exportar(System.Collections.Generic.List{CobmaisProject.Domain.Entities.Divida})">
+            <summary>
+            Exporta as dívidas atualizadas para um arquivo CSV.
+            O arquivo contém os detalhes das dívidas, incluindo CPF, data, contrato, valor original, valor atualizado e valor de desconto.
+            </summary>
+            <param name="dividas">Lista de dívidas a serem exportadas</param>
+        </member>
+        <member name="T:CobmaisProject.Domain.Entities.Cliente">
+            <summary>
+            Representa um cliente no sistema, que é uma extensão da classe Pessoa.
+            A classe Cliente adiciona o campo "Contrato" para associar a pessoa a um contrato específico.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Entities.Contrato">
+            <summary>
+            Representa um contrato no sistema, associado a um cliente e a um tipo específico de contrato.
+            Contém informações sobre o valor do contrato, data de vencimento e o tipo de contrato.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Entities.Divida">
+            <summary>
+            Representa uma dívida associada a um contrato, contendo informações sobre o valor original,
+            valor atualizado e o percentual de desconto aplicado à dívida.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Entities.LogAtualizacaoDivida">
+            <summary>
+            Representa o log de atualização de dívidas no sistema.
+            Esta classe armazena informações detalhadas sobre as atualizações realizadas nas dívidas dos contratos.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Entities.Pessoa">
+            <summary>
+            Representa uma pessoa no sistema.
+            A classe é utilizada para associar pessoas a contratos e clientes.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Entities.TipoContrato">
+            <summary>
+            Representa o tipo de contrato associado a um contrato.
+            Esta classe é utilizada para identificar diferentes tipos de contratos disponíveis no sistema.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Interfaces.IContratoRepository">
+            <summary>
+            Interface responsável pelas operações de persistência relacionadas aos contratos.
+            Esta interface define os métodos necessários para acessar e manipular os dados dos contratos e suas entidades associadas no banco de dados.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Interfaces.IContratoService">
+            <summary>
+            Interface responsável pelos serviços relacionados ao gerenciamento de contratos.
+            Esta interface define os métodos necessários para a importação, consulta e manipulação de contratos.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Domain.Interfaces.ILogAtualizacaoDividaRepository">
+            <summary>
+            Interface responsável pelos repositórios de log de atualização de dívida.
+            Define os métodos necessários para registrar logs de atualização de dívidas no sistema.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Infrastructure.Data.BD">
+            <summary>
+            Classe responsável pela criação e gerenciamento de conexões com o banco de dados.
+            Utiliza a string de conexão armazenada nas variáveis de ambiente para estabelecer uma conexão com o banco.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Infrastructure.Data.ContratoRepository">
+            <summary>
+            Implementação do repositório para operações de CRUD relacionadas ao contrato.
+            Realiza consultas, inserções e atualizações no banco de dados usando SQL.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Infrastructure.Data.LogAtualizacaoDividaRepository">
+            <summary>
+            Implementação do repositório para registrar logs de atualização de dívidas no banco de dados.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Infrastructure.ExternalServices.CobmaisApiService">
+            <summary>
+            Serviço para interagir com a API externa Cobmais para atualizar informações de dívidas.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Infrastructure.ExternalServices.CobmaisApiService.ApiResponse">
+            <summary>
+            A classe ApiResponse reflete o formato de retorno da API externa e não representa
+            um conceito de negócio ou domínio da aplicação. Por isso foi alocada dentro desta classe.
+            </summary>
+        </member>
+        <member name="T:CobmaisProject.Presentation.Controllers.ContratoController">
+            <summary>
+            Controller responsável pela gestão de contratos e operações associadas a dívidas,incluindo
+            a importação, atualização e exportação de informações de contratos.
+            </summary>
+        </member>
+        <member name="M:CobmaisProject.Presentation.Controllers.ContratoController.ImportarContrato(CobmaisProject.Presentation.ViewModels.CsvFileViewModel)">
+            <summary>
+            Endpoint para a importação manual de arquivos CSV contendo informações sobre contratos.
+            O arquivo deve ser enviado via formulário.
+            </summary>
+            <param name="model">O modelo que contém o arquivo CSV a ser processado.</param>
+            <returns>Retorna uma resposta HTTP indicando o sucesso ou falha da operação.</returns>
+        </member>
+        <member name="M:CobmaisProject.Presentation.Controllers.ContratoController.ImportarContratosDeDiretorio">
+            <summary>
+            Endpoint para a importação automática de arquivos CSV localizados em um diretório específico.
+            O diretório deve conter arquivos CSV no formato esperado.
+            </summary>
+            <returns>Retorna uma resposta HTTP indicando o sucesso ou falha da operação de importação.</returns>
+        </member>
+        <member name="M:CobmaisProject.Presentation.Controllers.ContratoController.ListarContratos">
+            <summary>
+            Endpoint para listar todos os contratos cadastrados no sistema.
+            Retorna uma lista com os contratos e seus dados associados.
+            </summary>
+            <returns>Uma resposta HTTP contendo a lista de contratos.</returns>
+        </member>
+        <member name="M:CobmaisProject.Presentation.Controllers.ContratoController.AtualizarDividas">
+            <summary>
+            Endpoint para atualizar e exportar as dívidas associadas aos contratos.
+            A atualização dos valores de dívidas é feita com base nas informações fornecidas pela API externa.
+            Após a atualização, as dívidas são exportadas para um arquivo CSV.
+            </summary>
+            <returns>Uma resposta HTTP confirmando a atualização e exportação das dívidas.</returns>
+        </member>
+        <member name="T:CobmaisProject.Presentation.ViewModels.CsvFileViewModel">
+            <summary>
+            ViewModel usado para representar o arquivo CSV enviado pelo usuário.
+            </summary>
+        </member>
+    </members>
+</doc>

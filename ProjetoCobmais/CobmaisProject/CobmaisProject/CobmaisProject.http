@@ -1,0 +1,6 @@
+@CobmaisProject_HostAddress = http://localhost:5147
+
+GET {{CobmaisProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
